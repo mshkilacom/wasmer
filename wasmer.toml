@@ -1,13 +1,15 @@
-[dependencies]
-"wasmer/python" = "^3.12.6"
-
-[fs]
-"/src" = "./src"
+[[module]]
+name = "server"
+source = "target/wasm32-wasi/release/rust-wcgi-starter.wasm"
+abi = "wasi"
 
 [[command]]
-name = "script"
-module = "wasmer/python:python"
-runner = "wasi"
+name = "server"
+module = "server"
+runner = "https://webc.org/runner/wcgi"
 
 [command.annotations.wasi]
-main-args = ["/src/main.py"]
+env = ["SCRIPT_NAME=rust_wcgi"]
+
+[command.annotations.wcgi]
+dialect = "rfc-3875"
